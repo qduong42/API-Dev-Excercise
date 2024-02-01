@@ -32,3 +32,16 @@ Steps Taken:
 Reflections/improvements
 
 - maybe use .env file to keep secrets safe when uploading to github
+
+How to see inside the database within the container:
+
+1. docker inspect -f '{{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}' mongodb
+2. docker exec -it mongodb sh then mongosh --host 172.19.0.2
+
+Easier way:
+1. docker exec -it mongosh
+2. use admin
+3. db.auth("username", "password")
+4. show dbs
+5. use database_name
+6. show collections
