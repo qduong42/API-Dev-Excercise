@@ -10,7 +10,7 @@ db = client["jsonplaceholder"]
 posts_collection = db["posts"]
 
 # Endpoint to get the total number of posts and comments for each user
-@app.get("/user_stats")
+@app.get("/user_stats/new")
 async def user_stats():
     pipeline = [
         {"$group": {"_id": "$userId", "total_posts": {"$sum": 1}, "total_comments": {"$sum": "$comments"}}}
@@ -21,4 +21,4 @@ async def user_stats():
 
 
 if __name__ == "__main__":
-    run("main:app", host="0.0.0.0", port=8000, reload=True)
+    run("main:app", host="0.0.0.0", port=100, reload=True)
