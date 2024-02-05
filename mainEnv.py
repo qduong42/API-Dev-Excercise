@@ -18,27 +18,51 @@ app = FastAPI()
 # Connect to MongoDB
 client = MongoClient(f"mongodb://{mongo_username}:{mongo_password}@localhost:27017/")
 db = client["jsonplaceholder"]
-posts_collection = db["posts"]
+# posts_collection = db["posts"]
 comments_collection = db["comments"]
 
+
 # Endpoint to get the total number of posts and comments for each user
-@app.get("/user_stats")
+# 2 Collections should be aggregated to show 1 set of values.
+@app.get("/user_stats/new")
 async def user_stats():
-    pipeline = [
-        {
-            "$group": {
-                "_id": "$userId", 
-                "total_posts": {"$sum": 1}
-                # "total_comments":  {"$cond": [{"$eq": ["$name", None]}, 1, 0]}
-                }
-		},
-        {
-            "$lookup":{
-                
-			}
-		}
-	]
-    result = list(posts_collection.aggregate(pipeline))
+    # pipeline = [
+#   {
+#     "$group": {
+#       "_id": "$userId",
+#       "total comments": {"$sum": 1},
+#     },
+#   },
+#   {
+#     "$lookup": {
+#       "from": "posts",
+#       "localField": "_id",
+#       "foreignField": "userId",
+#       "as": "posts_info",
+#     },
+#   },
+#   {
+#     "$addFields": {
+#       "total posts": {
+#         "$size": "$posts_info",
+#       },
+#     },
+#   },
+#     {
+#     "$project": {
+#       "posts_info": 0,
+#     },
+#   },
+#   {
+#     "$project":{
+#       "_id": 1,
+#       "total posts": 1,
+#       "total comments": 1
+#     }
+#   }
+# ]
+    # result = list(comments_collection.aggregate(pipeline))
+    result = list(comments_collection)
     return result
 
 
