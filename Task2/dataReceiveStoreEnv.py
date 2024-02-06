@@ -25,12 +25,11 @@ def load_csv_to_mongodb(csv_url, turbine_id):
             records_to_insert = df.to_dict(orient='records')
             # collection.insert_many(records)
             collection.create_index([("Dat/Zeit", 1), ("turbine_id", 1)])
-            for record in records_to_insert:
-                collection.update_one(
-                    {"Dat/Zeit": record["Dat/Zeit"], "turbine_id": record["turbine_id"]},
-                {"$addToSet": {"data": record}},
-                upsert=True
-                )
+            for item in records_to_insert:
+                unique_values = {"Dat/Zeit": item["Dat/Zeit"], "turbine_id": item["turbine_id"]}
+                existing_document = collection.find_one(unique_values)
+                if not existing_document:
+                    collection.insert_one(item)
         else:
             print(f"Failed to download the file. Status code: {response.status_code}")
     except pd.errors.ParserError as e:
