@@ -1,6 +1,8 @@
 Build instructions:
 
-- Run with GNU Make 4.2.1 and python3 (with or without venv)installed.
+1. Rename Task1/.env_Default to .env
+2. change rootuser and rootpass to your desired mongodb root user and password
+3. Run make with GNU Make 4.2.1 and python3 (with or without venv)installed.
 
 ```
 make
