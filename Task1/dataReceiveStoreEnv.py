@@ -9,7 +9,7 @@ mongo_password = config.get("MONGO_INITDB_ROOT_PASSWORD")
 
 client = MongoClient(f"mongodb://{mongo_username}:{mongo_password}@127.0.0.1:27017/")
 
-db = client["jsonplaceholder"]
+db = client["task1"]
 
 
 def insert_data_from_url(collection, url, unique_fields):
