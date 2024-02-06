@@ -22,8 +22,15 @@ def load_csv_to_mongodb(csv_url, turbine_id):
         if response.status_code == 200:
             df = pd.read_csv(StringIO(response.text), skipinitialspace=True, sep=';', on_bad_lines='warn')
             df['turbine_id'] = turbine_id
-            records = df.to_dict(orient='records')
-            collection.insert_many(records)
+            records_to_insert = df.to_dict(orient='records')
+            # collection.insert_many(records)
+            collection.create_index([("Dat/Zeit", 1), ("turbine_id", 1)])
+            for record in records_to_insert:
+                collection.update_one(
+                    {"Dat/Zeit": record["Dat/Zeit"], "turbine_id": record["turbine_id"]},
+                {"$addToSet": {"data": record}},
+                upsert=True
+                )
         else:
             print(f"Failed to download the file. Status code: {response.status_code}")
     except pd.errors.ParserError as e:
