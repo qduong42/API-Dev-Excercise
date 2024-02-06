@@ -15,9 +15,11 @@ client = MongoClient(f"mongodb://{mongo_username}:{mongo_password}@localhost:270
 db = client["jsonplaceholder"]
 comments_collection = db["comments"]
 
-
 # Endpoint to get the total number of posts and comments for each user
 # 2 Collections should be aggregated to show 1 set of values.
+@app.get("/")
+async def root():
+  return {"available endpoint":"/user_stats"}
 @app.get("/user_stats")
 async def user_stats():
     pipeline = [
@@ -46,6 +48,11 @@ async def user_stats():
     "$project": {
       "posts_info": 0,
     },
+  },
+  {
+    "$sort": {
+      "_id": 1
+    }
   }
 ]
     result = list(comments_collection.aggregate(pipeline))

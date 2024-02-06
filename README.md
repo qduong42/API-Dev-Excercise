@@ -1,3 +1,14 @@
+Build instructions:
+
+- Run with GNU Make 4.2.1 and python3 (with or without venv)installed.
+
+```
+make
+```
+
+- The makefile will detect if you have a .venv virtual env in your current directory, or it will use python3.
+- It installs all required python packages then runs the dataReceiveStoreEnv.py then mainEnv.py which runs the server.
+
 Task 1 Instructions:
 
 1.1. Setup MongoDB with Docker Compose
@@ -16,7 +27,7 @@ Steps Taken:
 2. docker-compose up -d
 
 1.2:
-1. activate venv => on windows: venv/scripts/activate
+1. activate venv => on linux: venv/bin/activate
 2. pip install pymongo requests
 3. Create script dataReceiveStore that
    - connect to DB
@@ -29,24 +40,30 @@ Steps Taken:
 2. create fastAPI application, connects to DB and defines endpoints. runs server
 3. python3 main.py
 
-Reflections/improvements
-
-- maybe use .env file to keep secrets safe when uploading to github
-
-Extension instructions
-- adding .env file functionality
-
+1.4
+1. Configured env file to not have username/password in python file but in seperate .env file
+2. Engineered mongo data aggregation pipeline.
+3. Added checks to dataReceiveStoreEnv.py to prevent duplicated records
+4. implemented makefile with commands make(all), clean, up, down
 How to see inside the database within the container:
 
-1. docker inspect -f '{{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}' mongodb
-2. docker exec -it mongodb sh then mongosh --host 172.19.0.2
+```
+docker exec -it mongodb mongosh -u user -p password --authenticationDatabase admin
+```
+```
+show dbs
+```
+```
+use jsonplaceholder
+```
+```
+show collections
+```
+```
+show posts
+```
 
-Easier way:
-1. docker exec -it mongodb mongosh
-2. db.auth("username", "password")
-3. show dbs
-4. use jsonplaceholder
-5. show collections
-6. show posts
+### Reflections
 
-7. in one command: docker exec -it mongodb mongosh -u root -p example --authenticationDatabase admin
+- pip install could be done with -r requirements.txt file
+- venv checking could be improved and supporting windows venv detection too. Currently only support linux .venv detection.
