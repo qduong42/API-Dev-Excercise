@@ -42,27 +42,11 @@ collection = db[collection_name]
 @app.get("/")
 async def root():
   return {"available endpoint":"/turbine_data"}
+
 @app.get("/turbine_data")
 async def get_turbine_data(turbine_id: int):
-    # Build the query
     query = {"turbine_id": turbine_id}
-
-    # Retrieve the documents from MongoDB
-    documents = list(collection.find(query, projection={"_id": False}).limit(20))
-
-    # Convert large floats to strings
-    for document in documents:
-        for key in document.keys():
-        # for key in ["Prod. 1", "Prod. 2", "BtrStd 1", "BtrStd 2"]:
-            # if key in document:
-            document[key] = str(document[key])
-    # for document in documents:
-    #     for key, value in document.items():
-    #         try:
-    #             dumps({key: value})
-    #         except (TypeError, OverflowError):
-    #             logging.error(f"Error serializing field {key} with value {value}")
-
+    documents = list(collection.find(query, projection={"_id": False}).skip(1).limit(50))
     return documents
 
 if __name__ == "__main__":
