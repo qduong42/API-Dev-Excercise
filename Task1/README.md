@@ -25,7 +25,7 @@ make
 - If venv creation fails, it will use the system python3.
 - It installs all required python packages then runs the dataReceiveStoreEnv.py then mainEnv.py which runs the server.
 
-Task 1 Instructions:
+### Task 1 Instructions:
 
 1.1. Setup MongoDB with Docker Compose
 Use Docker Compose to set up a MongoDB database.
@@ -61,7 +61,8 @@ Steps Taken:
 2. Engineered mongo data aggregation pipeline.
 3. Added checks to dataReceiveStoreEnv.py to prevent duplicated records
 4. implemented makefile with commands make(all), clean, up, down
-How to see inside the database within the container:
+
+### How to see inside the database within the container:
 
 ```
 docker exec -it mongodb mongosh -u user -p password --authenticationDatabase admin
@@ -81,4 +82,4 @@ show posts
 
 ### Reflections
 
-- pip install could be done with -r requirements.txt file
+- backend could be dockerized too maybe
