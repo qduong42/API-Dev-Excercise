@@ -1,14 +1,28 @@
-Build instructions:
+## Prerequisites
+- Run on:
+   - GNU Make 4.2.1  
+   - python 3.8.10
+- if using virtual environment on linux: python3.8-venv package
+  ```
+  sudo apt-get install python3.8-venv
+  ```
+   - official instructions: https://packaging.python.org/en/latest/guides/installing-using-pip-and-virtual-environments/
 
-1. Rename Task1/.env_Default to .env
-2. change rootuser and rootpass to your desired mongodb root user and password
-3. Run make with GNU Make 4.2.1 and python3 (with or without venv)installed.
+## Build instructions
+
+The Makefile tries to create a venv in the current directory if not already present with the name venv.
+
+If venv creation fails, it will use the system python3.
+
+1. Rename ```Task1/.env_Default``` to ```.env```
+2. change ```rootuser``` and ```rootpass``` to your desired mongodb root user and password
+3. Run ```make``` with GNU Make 4.2.1 and python3.8.10 (with or without venv)installed.
 
 ```
 make
 ```
-
-- The makefile will detect if you have a .venv virtual env in your current directory, or it will use python3.
+- The Makefile tries to create a venv in the current directory if not already present with the name venv.
+- If venv creation fails, it will use the system python3.
 - It installs all required python packages then runs the dataReceiveStoreEnv.py then mainEnv.py which runs the server.
 
 Task 1 Instructions:
@@ -68,4 +82,3 @@ show posts
 ### Reflections
 
 - pip install could be done with -r requirements.txt file
-- venv checking could be improved and supporting windows venv detection too. Currently only support linux .venv detection.

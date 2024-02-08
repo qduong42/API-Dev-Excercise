@@ -2,6 +2,8 @@ import requests
 import pymongo
 from pymongo import MongoClient
 from dotenv import dotenv_values  # So we do not need to work with os env values
+from termcolor import colored
+
 
 config = dotenv_values(".env")
 mongo_username = config.get("MONGO_INITDB_ROOT_USERNAME")
@@ -23,12 +25,17 @@ def insert_data_from_url(collection, url, unique_fields):
 
 
 collection_posts = db["posts"]
+print(colored('Creating index for posts id', 'green'))
 collection_posts.create_index([('id', pymongo.ASCENDING)], unique=True)
 unique_posts_fields = ["userId", "title", "body"]
+print(colored("Inserting data from url", 'green'))
 insert_data_from_url(collection_posts, "https://jsonplaceholder.typicode.com/posts", unique_posts_fields)
 
 collection_comments = db["comments"]
+print(colored('Creating index for comments id', 'green'))
 collection_comments.create_index([('id', pymongo.ASCENDING)], unique=True)
 unique_comments_fields = ["name", "email", "body"]
+print(colored("Inserting data from url", 'green'))
 insert_data_from_url(collection_comments, "https://jsonplaceholder.typicode.com/comments", unique_comments_fields)
+print(colored("updating postId to userId", 'green'))
 collection_comments.update_many({}, {"$rename": {"postId": "userId"}})

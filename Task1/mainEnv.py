@@ -12,7 +12,7 @@ mongo_password = config.get("MONGO_INITDB_ROOT_PASSWORD")
 app = FastAPI()
 
 client = MongoClient(f"mongodb://{mongo_username}:{mongo_password}@localhost:27017/")
-db = client["jsonplaceholder"]
+db = client["task1"]
 comments_collection = db["comments"]
 
 # Endpoint to get the total number of posts and comments for each user
@@ -60,4 +60,4 @@ async def user_stats():
 
 
 if __name__ == "__main__":
-    run("mainEnv:app", host ="0.0.0.0", port=8000, reload=True)
+    run("mainEnv:app", host ="0.0.0.0", port=7000, reload=True)
