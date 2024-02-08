@@ -25,10 +25,10 @@ endif
 venv:
 ifeq ($(OOS),Windows)
 	-python -m venv venv; VENV_EXIT_CODE=$$?; \
-	if [ $$VENV_EXIT_CODE -eq 0 ]; then . venv/Scripts/activate; venv/Scripts/pip install pymongo requests fastapi uvicorn python-dotenv pandas wheel termcolor;  else echo "Failed to create virtual environment"; rm -r venv/; exit 1; fi
+	if [ $$VENV_EXIT_CODE -eq 0 ]; then . venv/Scripts/activate; venv/Scripts/pip install --no-cache-dir -r requirements.txt;  else echo "Failed to create virtual environment"; rm -r venv/; exit 1; fi
 else
 	-python3 -m venv venv; VENV_EXIT_CODE=$$?; \
-	if [ $$VENV_EXIT_CODE -eq 0 ]; then . venv/bin/activate; venv/bin/pip install pymongo requests fastapi uvicorn python-dotenv pandas wheel termcolor; else echo "Failed to create virtual environment"; rm -r venv/; exit 1; fi
+	if [ $$VENV_EXIT_CODE -eq 0 ]; then . venv/bin/activate; venv/bin/pip install --no-cache-dir -r requirements.txt; else echo "Failed to create virtual environment"; rm -r venv/; exit 1; fi
 endif
 	@echo "Virtual environment detection passed successfully."
 
