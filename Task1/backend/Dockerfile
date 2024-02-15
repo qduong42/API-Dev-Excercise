@@ -1,9 +1,11 @@
-FROM python:3.80-alpine
+FROM python:latest
 
-COPY ./requirements.txt .
+COPY backend/ .
 
-RUN pip install -r requirements.txt
+RUN pip install --no-cache-dir -r requirements.txt
 
-RUN python3 dataReceiveStoreEnv.py
+# RUN python3 dataReceiveStoreEnv.py
 
-CMD ["python3", "mainEnv.py"]
+# CMD ["python3", "mainEnv.py"]
+ENTRYPOINT [ "tail" ]
+CMD ["-f", "/dev/null"]

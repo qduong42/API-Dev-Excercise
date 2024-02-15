@@ -11,7 +11,7 @@ mongo_password = config.get("MONGO_INITDB_ROOT_PASSWORD")
 
 app = FastAPI()
 
-client = MongoClient(f"mongodb://{mongo_username}:{mongo_password}@localhost:27017/")
+client = MongoClient(f"mongodb://{mongo_username}:{mongo_password}@mongo")
 db = client["task1"]
 comments_collection = db["comments"]
 
